@@ -8,12 +8,12 @@ export class clienteapp {
         this.botao = document.getElementById('add');
         this.ul = document.querySelector('ul')
         this.clientes = [];
-        this.api ='https://crudcrud.com/api/b4edb29121364f02a9fa42486080f84b/clientes'
+        this.api ='https://crudcrud.com/api/0b1bb6fbdb96471d8cba147fae74d51e/clientes';
     }
 
     init(){
         this.botao.addEventListener('click', (e) => this.adicionarcliente(e));
-        this.carregarclientes();
+        
     }
 
     adicionarcliente(e){
@@ -32,23 +32,11 @@ export class clienteapp {
 
         .then(res => res.json())
         .then(data => {
+            this.clientes = this.clientes.filter((cliente) => cliente.id !== data._id);
             this.clientes.push(data);
             this.renderizarlista();
             this.limparcampos();
-        });
-    }
-
-    carregarclientes(){
-        fetch(this.api)
-        .then(res => res.json())
-        .then(data => {
-            this.clientes = data;
-
-            const total = 
-            this.clientes.reduce((acc) => acc + 1,0);
             
-            
-            this.renderizarlista();
         });
     }
 
@@ -72,39 +60,24 @@ export class clienteapp {
          
     }
 
-    deletarcliente(id){
-        fetch(`${this.api}/${id}`, {
-            method: 'DELETE'
-        })
-        
-        .then(Response => {
-            if(!Response.ok){
-                throw new error(`Erro: ${Response.status} ${Response.statustext}`);
-            }
-            return Response.json;
-
-        })
-
-        .then(() => {
-            alert('cliente deletado com sucesso');
-        })
-
-        .catch(error => {
-            alert("Erro ao deletar cliente: " + error.message);
-        })
-        
-    
-        const cliente = this.clientes.find(c => c._id === id);
-        this.renderizarlista();
-    }
 
     limparcampos(){
-        this.nome.value = '';
-        this.email.value = '';
-    }
+        this.nome.value = "";
+        this.email.value = "";
+        this.nome.focus();
+    };
 
-    
+    deletarcliente(id){
+        fetch(`${this.api}/${id}`,{
+            method: 'DELETE',
+        })
+        .then(() => {
+             this.clientes =  this.clientes.filter((cliente) => cliente._id !== id);
+             this.renderizarlista();
+
+        });
+
+        
 
 
-}
-
+    }}

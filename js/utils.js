@@ -1,5 +1,5 @@
 export function validarcampos(nome,email){
-return nome.trim() === "" && email.trim() === "";
+return nome.trim() === "" && email.trim() === '' ? alert('preencha os campos') : true;
 
 }
 
