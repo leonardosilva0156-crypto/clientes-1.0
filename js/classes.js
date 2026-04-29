@@ -43,7 +43,7 @@ export class clienteapp {
     renderizarlista(){
         this.ul.innerHTML = "";
 
-        this.clientes.map(cliente => {
+        this.clientes.forEach(cliente => {
             const li = criarelemento('li', `${cliente.nome} - ${cliente.email}`);
 
             const del = criarelemento('button', 'X');
